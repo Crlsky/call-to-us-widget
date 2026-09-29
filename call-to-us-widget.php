@@ -21,6 +21,17 @@ final class Call_To_Us_Widget_Settings {
 		add_action( 'admin_menu', array( __CLASS__, 'add_settings_page' ) );
 		add_action( 'admin_init', array( __CLASS__, 'register_settings' ) );
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_color_picker' ) );
+		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( __CLASS__, 'add_settings_link' ) );
+	}
+
+	/** Add a direct Settings link to the Plugins screen. */
+	public static function add_settings_link( $links ) {
+		$url  = admin_url( 'options-general.php?page=' . self::PAGE_SLUG );
+		$link = '<a href="' . esc_url( $url ) . '">' . esc_html__( 'Ustawienia', 'call-to-us-widget' ) . '</a>';
+
+		array_unshift( $links, $link );
+
+		return $links;
 	}
 
 	public static function add_settings_page() {
